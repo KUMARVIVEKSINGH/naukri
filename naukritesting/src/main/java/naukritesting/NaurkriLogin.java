@@ -6,9 +6,12 @@ import java.util.Date;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 
 public class NaurkriLogin {
@@ -21,16 +24,29 @@ public class NaurkriLogin {
 		System.setProperty("phantomjs.binary.path",
 				"C:\\Users\\dc-user\\Downloads\\phantomjs-2.1.1-windows\\phantomjs-2.1.1-windows\\bin\\phantomjs.exe");
 		WebDriver driver = new PhantomJSDriver();
-		driver.get(Constant.LOGIN_URL);
-		driver.manage().window().maximize();
-		driver.findElement(By.id("emailTxt")).sendKeys(System.getProperty("naukriusername"));
+		//driver.get(Constant.LOGIN_URL);
+		//driver.manage().window().maximize();
+		/*driver.findElement(By.id("emailTxt")).sendKeys(System.getProperty("naukriusername"));
 		driver.findElement(By.id("pwd1")).sendKeys(System.getProperty("naukripassword"));
-		driver.findElements(By.id("sbtLog")).get(1).click();
-		waitForSecs(5);
+		driver.findElements(By.id("sbtLog")).get(1).click();*/
+		driver.get("http://naukri.com");
+        driver.manage().window().maximize();
+        waitForSecs(5);
+        takeScreenshot(driver);
+        driver.findElement(By.cssSelector("#login_Layer>div")).click();
+        driver.findElement(By.id("eLoginNew")).sendKeys(System.getProperty("naukriusername"));
+        driver.findElement(By.id("pLogin")).sendKeys(System.getProperty("naukripassword"));
+        driver.findElement(By.cssSelector("#lgnFrmNew>div>button.blueBtn")).click();
+        waitForSecs(5);
+        driver.findElement(By.linkText("UPDATE PROFILE")).click();
+        driver.findElement(By.cssSelector(".icon.edit")).click();
+        driver.findElement(By.id("saveBasicDetailsBtn")).sendKeys(Keys.ENTER);
+        driver.quit();
+		/*waitForSecs(5);
 		driver.get("https://my.naukri.com//Profile//edit?id=&altresid");
 		waitForSecs(5);
 		// takeScreenshot(driver);
-		driver.findElement(By.cssSelector("[value='Save Changes']")).click();
+		driver.findElement(By.cssSelector("[value='Save Changes']")).click();*/
 	}
 
 	public static void waitForSecs(int sec) {
